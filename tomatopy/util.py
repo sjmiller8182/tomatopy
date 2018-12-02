@@ -20,8 +20,7 @@ This file contains the following functions:
 import requests
 import time
 from bs4 import BeautifulSoup
-from .const import RT_BASE_URL
-from .const import DEFAULT_CRAWL_RATE
+from .const import RT_BASE_URL, DEFAULT_CRAWL_RATE
 
 custom_crawl_rate = 0
 
