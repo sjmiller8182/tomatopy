@@ -1,4 +1,7 @@
-# imports 
+#===================
+# imports / m-global
+#===================
+
 import re
 import time
 from .util import _make_soup
@@ -14,10 +17,30 @@ critic_pat = re.compile(r'\/\"\>([A-Z][a-zA-Z]+\s[A-Z][a-zA-Z\-]+)|([A-Z][a-zA-Z
 publisher_pat = re.compile(r'\"subtle\">[a-zA-Z\s,.\(\)\'\-&;!\/\d+]+</em>')
 date_pat = re.compile(r'[a-zA-Z]+\s\d+,\s\d+')
 
-# critic review handling
+#=======================
+# Critic Review Handling
+#=======================
+
+#==================
+# interal functions
+#==================
+
 def _get_critic_reviews_from_page(soup):
-    """
-    Get the review, rating, critic, if critic is a 'top critic', publisher, date from a given page (bs4)
+    """Get the review, rating, critic, if critic is a 
+    'top critic', publisher, date from a given page (bs4)
+
+    Parameters
+    ----------
+    soup : bs4 object
+        bs4 html tree from html_parser
+
+    Returns
+    -------
+    list
+        list of lists containing the following:
+        reviews, rating, fresh, critic, top_critic,
+        publisher, date
+        
     """
     
     reviews = list()
@@ -100,8 +123,18 @@ def _get_critic_reviews_from_page(soup):
     return [reviews, rating, fresh, critic, top_critic, publisher, date]
 
 def _get_num_pages(soup):
-    """
-    Find the number of pages to scrape reviews from
+    """Find the number of pages to scrape reviews from
+
+    Parameters
+    ----------
+    soup : bs4 object
+        bs4 html tree from html_parser
+
+    Returns
+    -------
+    str
+        number of pages with reviews
+        
     """
     
     # from soup decend to page level
@@ -112,12 +145,29 @@ def _get_num_pages(soup):
     match = match.split(' of ')[-1]
     return match
 
+#===============
+# user functions
+#===============
+    
 def get_critic_reviews(page, crawl_rate = DEFAULT_CRAWL_RATE):
-    """
-    Crawls the set of critic review pages for the given movie.
+    """Crawls the set of critic review pages for the given movie.
     Returns a dict withkeys: reviews, rating, fresh,
     critic, top_critic, publisher, date.
+
+    Parameters
+    ----------
+    page : str
+        main page url for movie
+
+    Returns
+    -------
+    dict
+        dict containing scraped review info with the following keys:
+        'reviews', 'rating', 'fresh', 'critic', 'top_critic',
+        'publisher', 'date'
+        
     """
+
     # containers
     info = [[],[],[],[],[],[],[]]
     

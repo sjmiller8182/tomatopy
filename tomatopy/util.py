@@ -14,7 +14,9 @@ This file contains the following functions:
     * _build_url - builds a url for main page if input
 """
 
-# imports
+#===================
+# imports / m-global
+#===================
 import requests
 from bs4 import BeautifulSoup
 from .const import RT_BASE_URL

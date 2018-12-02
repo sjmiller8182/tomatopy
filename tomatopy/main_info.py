@@ -1,4 +1,20 @@
-# imports
+"""main_info.py
+
+This file contains private functions for scraping the main pages .e.g.
+`RT_BASE_URL + m/ + MOVIE_NAME`
+
+This file requires no packages.
+
+This file contains the following functions:
+
+    * get_main_page_info - scrapes info from a movie main page
+
+"""
+
+#===================
+# imports / m-global
+#===================
+
 import re
 import time
 from .util import _make_soup
@@ -17,7 +33,29 @@ boxOff_pat = re.compile(r'Box Office: </div>[\sa-z\<\=\"\-\>]+.?[\d,]+')
 rt_pat = re.compile(r'Runtime: </div>[\sa-zA-Z\d\<\=\"\-\>]+minutes')
 studio_pat = re.compile(r'Studio: </div>[\sa-zA-Z\d\<\=\"\-\>\:\/\.]+a>\s+</div>')   
 
+#===============
+# user functions
+#===============
+
 def get_main_page_info(page, crawl_rate = DEFAULT_CRAWL_RATE):
+    """Scrapes info from a movie main page
+
+    Parameters
+    ----------
+    page : str
+        The url to scrape from RT
+    crawl_rate : float
+        Time in seconds between secessive requests
+        This should be considered the minimum time
+
+    Returns
+    -------
+    dict
+        dict of scraped info with keys:
+        synopsis, rating, genre, studio, director, writer, currency,
+        box_office, runtime
+    """
+    
     info = dict()   
     
     # make soup
