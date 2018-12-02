@@ -1,0 +1,145 @@
+# imports 
+import re
+import time
+from .util import _make_soup
+from .const import DEFAULT_CRAWL_RATE
+
+# regex patterns
+# run once on import
+page_pat = re.compile(r'Page 1 of \d+')
+review_pat = re.compile(r'<div class=\"the_review\">[;a-zA-Z\s,-.\'\?\[\]\":\']*</div>')
+rating_pat = re.compile(r'Original Score:\s([A-Z](\+|-)?|\d(.\d)?(\/\d)?)')
+fresh_pat = re.compile(r'small\s(fresh|rotten)\"')
+critic_pat = re.compile(r'\/\"\>([A-Z][a-zA-Z]+\s[A-Z][a-zA-Z\-]+)|([A-Z][a-zA-Z.]+\s[A-Z].?\s[A-Z][a-zA-Z]+)|([A-Z][a-zA-Z]+\s[A-Z]+\'[A-Z][a-zA-Z]+)')
+publisher_pat = re.compile(r'\"subtle\">[a-zA-Z\s,.\(\)\'\-&;!\/\d+]+</em>')
+date_pat = re.compile(r'[a-zA-Z]+\s\d+,\s\d+')
+
+# critic review handling
+def _get_critic_reviews_from_page(soup):
+    """
+    Get the review, rating, critic, if critic is a 'top critic', publisher, date from a given page (bs4)
+    """
+    
+    reviews = list()
+    rating = list()
+    fresh = list()
+    critic = list()
+    top_critic = list()
+    publisher = list()
+    date = list()
+    
+    # get to review soup
+    children = [14,1,3,1,5,7]
+    for i in children:
+        soup = list(soup.children)[i]
+    
+    # at the review level
+    review_soup = list(soup.children)
+    
+    # extract info
+    for review in review_soup:
+        
+        # extract review
+        match = re.findall(review_pat, str(review))
+        if len(match) > 0:
+            m = match[0]
+            for iden in ['<div class="the_review"> ','</div>']:
+                m = m.replace(iden,'')
+            reviews.append(m)
+            
+            # extract rating
+            match = re.findall(rating_pat, str(review))
+            if len(match) > 0:
+                m = match[0][0]
+                if '/1' in m:
+                    sp_m = m.split('/')
+                    if sp_m[-1] == '1':
+                        sp_m[-1] = '10'
+                    m = '/'.join(sp_m)
+                rating.append(m)
+            else:
+                rating.append(None)
+            
+            # extract fresh indicator
+            match = re.findall(fresh_pat, str(review))
+            if len(match) > 0:
+                fresh.append(match[0])
+            else:
+                fresh.append(None)
+            
+            # extract ciritic
+            match = re.findall(critic_pat, str(review))
+            if len(match) > 0:
+                critic.append(''.join(match[0]))
+            else:
+                critic.append(None)
+            
+            # check if top critic
+            if '> Top Critic<' in str(review):
+                top_critic.append(1)
+            else:
+                top_critic.append(0)
+            
+            # extract publisher
+            match = re.findall(publisher_pat, str(review))
+            if len(match) > 0:
+                m = match[0]
+                m = m.replace('"subtle">', '')
+                m = m.replace('</em>','')
+                publisher.append(m)
+            else:
+                publisher.append(None)
+            
+            # extract date
+            match = re.findall(date_pat, str(review))
+            if len(match) > 0:
+                date.append(match[0])
+            else:
+                date.append(None)
+            
+    return [reviews, rating, fresh, critic, top_critic, publisher, date]
+
+def _get_num_pages(soup):
+    """
+    Find the number of pages to scrape reviews from
+    """
+    
+    # from soup decend to page level
+    children = [14,1,3,1,5]
+    for i in children:
+        soup = list(soup.children)[i]
+    match = re.findall(page_pat,str(list(soup)[1]))[0]
+    match = match.split(' of ')[-1]
+    return match
+
+def get_critic_reviews(page, crawl_rate = DEFAULT_CRAWL_RATE):
+    """
+    Crawls the set of critic review pages for the given movie.
+    Returns a dict withkeys: reviews, rating, fresh,
+    critic, top_critic, publisher, date.
+    """
+    # containers
+    info = [[],[],[],[],[],[],[]]
+    
+    # make soup
+    soup = _make_soup(page + "reviews")
+    
+    # how many soups?
+    pages = _get_num_pages(soup)
+    
+    # eat soup
+    for page_num in range(1,int(pages)+1):
+        time.sleep(crawl_rate)
+        soup = _make_soup(page + "reviews?page=" + str(page_num) + "&sort=")
+        c_info = _get_critic_reviews_from_page(soup)
+        
+        # accumulate review info
+        for i in range(len(c_info)):
+            info[i] = info[i] + c_info[i]
+    
+    c_info = dict()
+    keys = ['reviews', 'rating', 'fresh', 'critic', 'top_critic', 'publisher', 'date']
+    for k in range(len(keys)):
+        c_info[keys[k]] = info[k]
+        
+    return c_info
