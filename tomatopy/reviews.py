@@ -1,7 +1,6 @@
 """main_info.py
 
-This file contains private functions for scraping the main pages .e.g.
-`RT_BASE_URL + m/ + MOVIE_NAME`
+This file contains private functions for scraping the review pages
 
 This file requires no packages.
 
