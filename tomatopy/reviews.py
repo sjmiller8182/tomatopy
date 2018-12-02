@@ -1,3 +1,18 @@
+"""main_info.py
+
+This file contains private functions for scraping the main pages .e.g.
+`RT_BASE_URL + m/ + MOVIE_NAME`
+
+This file requires no packages.
+
+This file contains the following functions:
+
+    * _get_critic_reviews_from_page - scrapes info per critic page
+    * _get_num_pages - finds number of pages to scrape
+    * get_critic_reviews - scrapes info over all critic pages 
+
+"""
+
 #===================
 # imports / m-global
 #===================
