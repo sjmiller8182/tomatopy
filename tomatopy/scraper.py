@@ -6,7 +6,7 @@ This file requires no packages.
 
 This file contains the following functions:
 
-    *  
+    *  scrape_movie_info - main movie scraper
 
 """
 
