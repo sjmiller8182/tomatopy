@@ -1,2 +1,2 @@
-# tomatopy
-Web scraper for rotten tomatoes reviews and info
+# TomatoPy - Rotten Tomatoes Scraper
+Web scraper for rotten tomatoes reviews and info.
