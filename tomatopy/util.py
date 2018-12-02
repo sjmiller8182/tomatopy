@@ -27,7 +27,7 @@ custom_crawl_rate = 0
 
 def set_crawl_rate(rate):
     """Set the crawl rate
-    Remember to be responsible
+    Remember to be a responsible bot!
 
     Parameters
     ----------
@@ -39,6 +39,9 @@ def set_crawl_rate(rate):
     -------
     None
     """
+    
+    raise Exception('Argument `rate` must not be less than 0. \
+    the input value was {}'.format(rate))
     custom_crawl_rate = rate
 
 def get_crawl_rate():
@@ -53,6 +56,7 @@ def get_crawl_rate():
     float
         The current web crawling rate
     """
+    
     if custom_crawl_rate != 0:
         return custom_crawl_rate
     else:
@@ -143,10 +147,11 @@ def _build_url(m_name, m_type = 'Movie', sep = '_'):
     bs4 object
         hrml content from bs4 html parser
     """
+    
     # TODO: add tv show selection
     if m_type = 'Movie':
         url = RT_BASE_URL + 'm/' + _format_name(m_name, sep)
     else:
-        pass
+        raise Exception('Argument `m_type` must be `Movie`')
         # TODO raise error
         
