@@ -16,9 +16,7 @@ This file contains the following functions:
 #===================
 
 import re
-import time
 from .util import _make_soup
-from .const import DEFAULT_CRAWL_RATE
 
 # regex patterns
 # run once on import
@@ -37,16 +35,13 @@ studio_pat = re.compile(r'Studio: </div>[\sa-zA-Z\d\<\=\"\-\>\:\/\.]+a>\s+</div>
 # user functions
 #===============
 
-def get_main_page_info(page, crawl_rate = DEFAULT_CRAWL_RATE):
+def get_main_page_info(page):
     """Scrapes info from a movie main page
 
     Parameters
     ----------
     page : str
         The url to scrape from RT
-    crawl_rate : float
-        Time in seconds between secessive requests
-        This should be considered the minimum time
 
     Returns
     -------
@@ -59,7 +54,6 @@ def get_main_page_info(page, crawl_rate = DEFAULT_CRAWL_RATE):
     info = dict()   
     
     # make soup
-    time.sleep(crawl_rate)
     soup = _make_soup(page)
     
     # prepare soup
@@ -162,5 +156,7 @@ def get_main_page_info(page, crawl_rate = DEFAULT_CRAWL_RATE):
         info['studio'] = '|'.join(studio)
     else:
         info['studio'] = None
+    
+    # TODO: add cast scraper
     
     return info

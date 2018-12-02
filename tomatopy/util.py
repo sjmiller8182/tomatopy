@@ -18,24 +18,63 @@ This file contains the following functions:
 # imports / m-global
 #===================
 import requests
+import time
 from bs4 import BeautifulSoup
 from .const import RT_BASE_URL
+from .const import DEFAULT_CRAWL_RATE
 
+custom_crawl_rate = 0
 
-def _make_soup(url):
+def set_crawl_rate(rate):
+    """Set the crawl rate
+    Remember to be responsible
+
+    Parameters
+    ----------
+    rate : float
+        Time in seconds between secessive requests
+        This should be considered the minimum time
+        
+    Returns
+    -------
+    None
+    """
+    custom_crawl_rate = rate
+
+def get_crawl_rate():
+    """Get the rate used to crawl
+
+    Parameters
+    ----------
+    None
+        
+    Returns
+    -------
+    float
+        The current web crawling rate
+    """
+    if custom_crawl_rate != 0:
+        return custom_crawl_rate
+    else:
+        return DEFAULT_CRAWL_RATE
+    
+def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     """Request url and get content of page as html soup
 
     Parameters
     ----------
     url : str
         The url to scrape from RT
-
+    crawl_rate : float
+        Time in seconds between secessive requests
+        This should be considered the minimum time
+        
     Returns
     -------
     bs4 object
-        hrml content from bs4 html parser
+        html content from bs4 html parser
     """
-
+    time.sleep(crawl_rate)
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'html.parser')
     return soup

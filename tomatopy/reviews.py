@@ -5,7 +5,6 @@
 import re
 import time
 from .util import _make_soup
-from .const import DEFAULT_CRAWL_RATE
 
 # regex patterns
 # run once on import
@@ -149,7 +148,7 @@ def _get_num_pages(soup):
 # user functions
 #===============
     
-def get_critic_reviews(page, crawl_rate = DEFAULT_CRAWL_RATE):
+def get_critic_reviews(page):
     """Crawls the set of critic review pages for the given movie.
     Returns a dict withkeys: reviews, rating, fresh,
     critic, top_critic, publisher, date.
@@ -179,7 +178,6 @@ def get_critic_reviews(page, crawl_rate = DEFAULT_CRAWL_RATE):
     
     # eat soup
     for page_num in range(1,int(pages)+1):
-        time.sleep(crawl_rate)
         soup = _make_soup(page + "reviews?page=" + str(page_num) + "&sort=")
         c_info = _get_critic_reviews_from_page(soup)
         
@@ -193,3 +191,10 @@ def get_critic_reviews(page, crawl_rate = DEFAULT_CRAWL_RATE):
         c_info[keys[k]] = info[k]
         
     return c_info
+    
+#=====================
+# User Review Handling
+#=====================
+
+# TODO: Add scraping for user reviews
+
