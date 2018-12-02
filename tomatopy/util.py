@@ -148,7 +148,7 @@ def _build_url(m_name, m_type = 'Movie', sep = '_'):
     """
     
     # TODO: add tv show selection
-    if m_type = 'Movie':
+    if m_type == 'Movie':
         url = RT_BASE_URL + 'm/' + _format_name(m_name, sep)
     else:
         raise Exception('Argument `m_type` must be `Movie`')
