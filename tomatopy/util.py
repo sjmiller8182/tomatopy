@@ -45,7 +45,7 @@ def set_crawl_rate(rate):
     else:
         lib_cont.set_crawl_rate(rate)
         
-def get_crawl_rate(self):
+def get_crawl_rate():
     """Get the rate used to crawl
 
     Parameters
