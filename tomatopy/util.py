@@ -20,9 +20,9 @@ This file contains the following functions:
 import requests
 import time
 from bs4 import BeautifulSoup
-from .gl import RT_BASE_URL, DEFAULT_CRAWL_RATE
+from .gl import RT_BASE_URL, DEFAULT_CRAWL_RATE, LibGlobalsContainer
 
-custom_crawl_rate = 0
+lib_cont = LibGlobalsContainer()
 
 def set_crawl_rate(rate):
     """Set the crawl rate
@@ -33,34 +33,36 @@ def set_crawl_rate(rate):
     rate : float
         Time in seconds between secessive requests
         This should be considered the minimum time
-        
+
     Returns
     -------
     None
     """
-    
-    raise Exception('Argument `rate` must not be less than 0. \
-    the input value was {}'.format(rate))
-    custom_crawl_rate = rate
 
-def get_crawl_rate():
+    if rate <= 0:
+        raise Exception('Argument `rate` must not be less than \
+        or equal to 0. The input value was {}'.format(rate))
+    else:
+        lib_cont.set_crawl_rate(rate)
+        
+def get_crawl_rate(self):
     """Get the rate used to crawl
 
     Parameters
     ----------
     None
-        
+
     Returns
     -------
     float
         The current web crawling rate
     """
-    
-    if custom_crawl_rate != 0:
-        return custom_crawl_rate
+
+    if lib_cont.custom_crawl_rate != 0:
+        return lib_cont.custom_crawl_rate
     else:
         return DEFAULT_CRAWL_RATE
-    
+   
 def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     """Request url and get content of page as html soup
 
@@ -77,6 +79,7 @@ def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     bs4 object
         html content from bs4 html parser
     """
+    crawl_rate = get_crawl_rate()
     time.sleep(crawl_rate)
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -156,4 +159,4 @@ def _build_url(m_name, m_type = 'Movie', sep = '_'):
         raise Exception('Argument `m_type` must be `Movie`')
         # TODO raise error
     return url
-        
+            
