@@ -23,7 +23,7 @@ from .util import _make_soup
 # regex patterns
 # run once on import
 page_pat = re.compile(r'Page 1 of \d+')
-review_pat = re.compile(r'<div class=\"the_review\">[;a-zA-Z\s,-.\'\?\[\]\":\']*</div>')
+review_pat = re.compile(r'<div class=\"the_review\">[;a-zA-Z\s,-.\'\/\?\[\]\":\']*</div>')
 rating_pat = re.compile(r'Original Score:\s([A-Z](\+|-)?|\d(.\d)?(\/\d)?)')
 fresh_pat = re.compile(r'small\s(fresh|rotten)\"')
 critic_pat = re.compile(r'\/\"\>([A-Z][a-zA-Z]+\s[A-Z][a-zA-Z\-]+)|([A-Z][a-zA-Z.]+\s[A-Z].?\s[A-Z][a-zA-Z]+)|([A-Z][a-zA-Z]+\s[A-Z]+\'[A-Z][a-zA-Z]+)')
@@ -151,10 +151,7 @@ def _get_num_pages(soup):
     """
     
     # from soup decend to page level
-    children = [14,1,3,1,5]
-    for i in children:
-        soup = list(soup.children)[i]
-    match = re.findall(page_pat,str(list(soup)[1]))[0]
+    match = re.findall(page_pat,str(list(soup)))[0]
     match = match.split(' of ')[-1]
     return match
 
@@ -185,7 +182,10 @@ def get_critic_reviews(page):
     info = [[],[],[],[],[],[],[]]
     
     # make soup
+    print(page + "reviews")
     soup = _make_soup(page + "reviews")
+    
+    #print(soup)
     
     # how many soups?
     pages = _get_num_pages(soup)

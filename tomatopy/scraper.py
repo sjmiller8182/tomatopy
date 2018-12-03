@@ -14,7 +14,7 @@ This file contains the following functions:
 # imports / m-global
 #===================
 
-from .util import _is_page_404, _build_url
+from .util import _is_page_404, _build_url, _make_soup
 from .main_info import get_main_page_info
 from .reviews import get_critic_reviews
 
@@ -36,15 +36,23 @@ def scrape_movie_info(movie_name):
         dict containing the review information
         
     """
-    # check name (is page a 404?), multiple seperator schemes
-    not_404 = is_page_404(movie_name)
     
-    if not_404:
-        # scrape main info page
-        dict_main_info = get_main_info(page)
-        # wait between scrapes?
-        dict_critic_reviews = get_critic_reviews(page)
-        
-        # wait between scrapes
-        # get_user_reviews
-        
+    unable_to_scrape = True
+    
+    # determine if url can be used
+    seps = ['_', '-']
+    for sep in seps:
+        movie_url = _build_url(movie_name)
+        soup = _make_soup(movie_url)
+        is_404 = _is_page_404(movie_name)
+        if not is_404:
+            unable_to_scrape = False
+            break
+    
+    # scrape page if possible
+    if not unable_to_scrape:
+        main_info = get_main_page_info(movie_url)
+        critic_reviews = get_critic_reviews(movie_url)
+        return main_info, critic_reviews
+    else:
+        print('unable to scrape ' + movie_name)

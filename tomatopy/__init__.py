@@ -13,7 +13,7 @@ This file contains not functions.
 # Primary User Access
 #====================
 
-
+from .scraper import scrape_movie_info
 
 #=========================
 # Supplemental User Access

@@ -20,7 +20,7 @@ from .util import _make_soup
 
 # regex patterns
 # run once on import
-movieSyn_pat = re.compile(r'movieSynopsis[a-zA-Z\"\s=\:]+>\s+[a-zA-Z\"\s=\:.,-\;\&\']+')
+movieSyn_pat = re.compile(r'movieSynopsis[a-zA-Z\"\s=\:]+>\s+[a-zA-Z\"\?\(\)\s=\:.,-\;\&\']+')
 rating_pat = re.compile(r'Rating: </div>[\s]+[a-zA-Z\=\-\<\>\s\"]+\>[A-Z\-\d]+')
 genres_pat = re.compile(r'Genre: </div>[\s]+[a-zA-Z\=\-\<\>\s\"\/\?\d\&\;\,]+</div>')
 dir_pat = re.compile(r'Directed By: </div>[a-zA-Z\=\-\<\>\s\"\/\?\d\&\;\,\_]+</div>')

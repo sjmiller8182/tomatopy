@@ -20,7 +20,7 @@ This file contains the following functions:
 import requests
 import time
 from bs4 import BeautifulSoup
-from .const import RT_BASE_URL, DEFAULT_CRAWL_RATE
+from .gl import RT_BASE_URL, DEFAULT_CRAWL_RATE
 
 custom_crawl_rate = 0
 
@@ -101,6 +101,8 @@ def _is_page_404(soup):
         soup = str(soup)
     if '<h1>404 - Not Found</h1>' in soup:
         return True
+    else:
+        return False
         
 def _format_name(m_name, sep = '_'):
     """Formats name for url
@@ -122,7 +124,7 @@ def _format_name(m_name, sep = '_'):
     m_name = m_name.lower()
     
     # remove any punctuation
-    remove_items = ["'-:,"]
+    remove_items = "'-:,"
     for i in remove_items:
         if i in m_name:
             m_name = m_name.replace(i,'')
@@ -149,8 +151,9 @@ def _build_url(m_name, m_type = 'Movie', sep = '_'):
     
     # TODO: add tv show selection
     if m_type == 'Movie':
-        url = RT_BASE_URL + 'm/' + _format_name(m_name, sep)
+        url = RT_BASE_URL + 'm/' + _format_name(m_name, sep) + '/'
     else:
         raise Exception('Argument `m_type` must be `Movie`')
         # TODO raise error
+    return url
         
