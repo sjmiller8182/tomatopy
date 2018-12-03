@@ -71,7 +71,7 @@ def get_main_page_info(page):
     # get synopsis
     match = re.findall(movieSyn_pat, info_html)
     if len(match) > 0:
-        match = match[0].split('>')[-1].replace('\n','').replace('                ','')
+        match = match[0].split('>')[-1].strip()
         info['synopsis'] = match
     else:
         info['synopsis'] = None
@@ -147,7 +147,7 @@ def get_main_page_info(page):
     # get runtime
     match = re.findall(rt_pat, info_html)
     if len(match) > 0:
-        info['runtime'] = match[0].split('\n')[-1].lstrip()
+        info['runtime'] = match[0].split('\n')[-1].strip()
     else:
         info['runtime'] = None
     
@@ -158,7 +158,7 @@ def get_main_page_info(page):
         studio = list()
         for s in match:
             if '</a>' in s:
-                studio.append(s.replace('</a>','').replace('</div>','').rstrip())
+                studio.append(s.replace('</a>','').replace('</div>','').strip())
         info['studio'] = '|'.join(studio)
     else:
         info['studio'] = None
