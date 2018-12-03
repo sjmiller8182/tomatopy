@@ -3,14 +3,16 @@
 
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.org/project/requests/)
 
-Web scraper for rotten tomatoes reviews and info.
+Easy web scraping for [rotten tomatoes](https://www.rottentomatoes.com/) movie reviews and info.
 
 ![](https://c1.staticflickr.com/4/3614/3695696788_219f255121_b.jpg?raw=true)
 
-[Enjoy the recipe](https://www.washingtonpost.com/recipes/ann-marottos-fresh-tomato-pie/7512/?utm_term=.cba2e0d74032)
+[Enjoy the recipe](https://www.geniuskitchen.com/recipe/easy-tomato-cheese-pie-with-crumb-crust-27486)
 
 ### Basic Usage
 
 ```python
 import tomatopy as rtp
+# get main information and critic reivews 
+main_info, reviews = rtp.scrape_movie_info('X2: X-Men United')
 ```
