@@ -17,6 +17,7 @@ This file contains the following functions:
 
 import re
 from .util import _make_soup
+from .util import _build_url
 from .util import get_verbose_setting
 
 # regex patterns

@@ -20,6 +20,7 @@ import re
 import time
 from .util import _make_soup
 from .util import get_verbose_setting
+from .util import _build_url
 
 # regex patterns
 # run once on import
