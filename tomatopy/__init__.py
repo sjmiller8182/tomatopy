@@ -28,3 +28,5 @@ from .main_info import get_main_page_info
 
 from .util import set_crawl_rate
 from .util import get_crawl_rate
+from .util import get_verbose_setting
+from .util import set_verbose_mode

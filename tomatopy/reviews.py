@@ -19,6 +19,7 @@ This file contains the following functions:
 import re
 import time
 from .util import _make_soup
+from .util import get_verbose_setting
 
 # regex patterns
 # run once on import
@@ -180,15 +181,17 @@ def get_critic_reviews(page):
 
     # containers
     info = [[],[],[],[],[],[],[]]
-    
+        
     # make soup
-    print(page + "reviews")
     soup = _make_soup(page + "reviews")
-    
-    #print(soup)
     
     # how many soups?
     pages = _get_num_pages(soup)
+    
+    # verbose option
+    if get_verbose_setting():
+        print('scraping critic reviews')
+        print('scraping url: ' + page + "reviews " + str(pages) + " pages to scrape")
     
     # eat soup
     for page_num in range(1,int(pages)+1):
@@ -203,7 +206,10 @@ def get_critic_reviews(page):
     keys = ['reviews', 'rating', 'fresh', 'critic', 'top_critic', 'publisher', 'date']
     for k in range(len(keys)):
         c_info[keys[k]] = info[k]
-        
+    
+    # verbose option
+    if get_verbose_setting():
+        print('done scraping critic reviews')
     return c_info
     
 #=====================

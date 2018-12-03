@@ -12,6 +12,10 @@ This file contains the following functions:
     * _is_page_404 - check if requested page is a 404
     * _format_name - convert input movie name to url format
     * _build_url - builds a url for main page if input
+    * set_crawl_rate - set crawl rate
+    * get_crawl_rate - get current crawl_rate
+    * set_verbose_mode - set verbose mode (Boolean)
+    * get_verbose_setting - get verbose setting
 """
 
 #===================
@@ -62,7 +66,37 @@ def get_crawl_rate():
         return lib_cont.custom_crawl_rate
     else:
         return DEFAULT_CRAWL_RATE
-   
+
+def set_verbose_mode(verbose = False):
+    """Enable/Disable Verbose Mode
+
+    Parameters
+    ----------
+    verbose : boolean
+        Internal mode setting
+
+    Returns
+    -------
+    None
+    """
+
+    lib_cont.set_verbose_mode(verbose)
+        
+def get_verbose_setting():
+    """Get the current setting of verbose
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    boolean
+        State of verbose setting
+    """
+
+    return lib_cont.get_verbose_setting()
+    
 def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     """Request url and get content of page as html soup
 

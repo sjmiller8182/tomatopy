@@ -17,6 +17,7 @@ This file contains the following functions:
 
 import re
 from .util import _make_soup
+from .util import get_verbose_setting
 
 # regex patterns
 # run once on import
@@ -52,6 +53,11 @@ def get_main_page_info(page):
     """
     
     info = dict()   
+    
+    # verbose option
+    if get_verbose_setting():
+        print('scraping main page')
+        print('scraping url: ' + page)
     
     # make soup
     soup = _make_soup(page)

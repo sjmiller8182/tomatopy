@@ -8,13 +8,48 @@ This file contains to functions.
 
 """
 
+#==========
+# constants
+#==========
+
 RT_BASE_URL = 'https://www.rottentomatoes.com/'
 DEFAULT_CRAWL_RATE = 1
 
+#========
+# classes
+#========
+
 class LibGlobalsContainer():
+    """
+    A class used to contain internal settings
+
+    ...
+
+    Attributes
+    ----------
+    custom_crawl_rate : float
+        Crawl rate used by _make_soup
+    verbose : boolean
+        Verbose scraping setting
+
+    Methods
+    -------
+    set_crawl_rate(rate)
+        Sets the crawl rate
+    get_crawl_rate
+        Gets the current crawl rate
+    set_verbose_mode(verbose = False)
+        Sets crawling to verbose mode
+    get_verbose_setting
+        Gets the current verbose setting
+    
+    """
+    
     def __init__(self):
         """Init container; setup behavior variables
-
+        Set custom_crawl_rate to 0 be default to use
+        DEFAULT_CRAWL_RATE
+        
         Parameters
         ----------
         self : self
@@ -23,7 +58,8 @@ class LibGlobalsContainer():
         -------
         None
         """
-        self.custom_crawl_rate = 0
+        self.custom_crawl_rate = 0.0
+        self.verbose = False
         
     def set_crawl_rate(self, rate):
         """Set the crawl rate
@@ -63,3 +99,33 @@ class LibGlobalsContainer():
             return self.custom_crawl_rate
         else:
             return DEFAULT_CRAWL_RATE
+            
+    def set_verbose_mode(self, verbose = False):
+        """Enable/Disable Verbose Mode
+
+        Parameters
+        ----------
+        verbose : boolean
+            Internal mode setting
+
+        Returns
+        -------
+        None
+        """
+
+        self.verbose = verbose
+            
+    def get_verbose_setting(self):
+        """Get the current setting of verbose
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        boolean
+            State of self.verbose
+        """
+
+        return self.verbose
