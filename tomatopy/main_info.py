@@ -63,107 +63,114 @@ def get_main_page_info(page):
     # make soup
     soup = _make_soup(page)
     
-    # prepare soup
-    # ignore steping through tree due to instability
-    info_html = str(soup)
-    
-    ### eat soup ###
-    
-    # get synopsis
-    match = re.findall(movieSyn_pat, info_html)
-    if len(match) > 0:
-        match = match[0].split('>')[-1].strip()
-        info['synopsis'] = match
+    if soup = '':
+        # return Nones when soup failed
+        return {'synopsis':None, 'rating':None, 'genre':None, 'studio':None,
+        'director':None, 'writer':None, 'currency':None, 'box_office':None,
+        'runtime':None}
+        
     else:
-        info['synopsis'] = None
-    
-    # get rating
-    match = re.findall(rating_pat, info_html)
-    if len(match) > 0:
-        match = match[0].split('>')[-1]
-        info['rating'] = match
-    else:
-        info['rating'] = None
-    
-    # get genre
-    match = re.findall(genres_pat, info_html)
-    if len(match) > 0:
-        match = match[0].replace('&amp;','and').split('>')
-        genre = list()
-        for g in match:
-            if '</a' in g:
-                genre.append(g.replace('</a','').rstrip().lstrip())
-        info['genre'] = '|'.join(genre)
-    else:
-        info['genre'] = None
-    
-    # get director
-    match = re.findall(dir_pat, info_html)
-    if len(match) > 0:
-        match = match[0].replace('&amp;','and').split('>')
-        director = list()
-        for d in match:
-            if '</a' in d:
-                director.append(d.replace('</a',''))
-        info['director'] = '|'.join(director)
-    else:
-        info['director'] = None
-    
-    # get director
-    match = re.findall(wrt_pat, info_html)
-    if len(match) > 0:
-        match = match[0].replace('&amp;','and').split('>')
-        writer = list()
-        for w in match:
-            if '</a' in w:
-                writer.append(w.replace('</a',''))
-        info['writer'] = '|'.join(writer)
-    else:
-        info['writer'] = None
-    
-    # get dates
-    match = re.findall(date_pat, info_html)
-    if len(match) > 0:
-        match = re.findall(date2_pat, match[0])
-        if len(match) == 2:
-            info['theater_date'] = match[0]
-            info['dvd_date'] = match[1]
+        # prepare soup
+        # ignore steping through tree due to instability
+        info_html = str(soup)
+        
+        ### eat soup ###
+        
+        # get synopsis
+        match = re.findall(movieSyn_pat, info_html)
+        if len(match) > 0:
+            match = match[0].split('>')[-1].strip()
+            info['synopsis'] = match
         else:
-            #match failed
+            info['synopsis'] = None
+        
+        # get rating
+        match = re.findall(rating_pat, info_html)
+        if len(match) > 0:
+            match = match[0].split('>')[-1]
+            info['rating'] = match
+        else:
+            info['rating'] = None
+        
+        # get genre
+        match = re.findall(genres_pat, info_html)
+        if len(match) > 0:
+            match = match[0].replace('&amp;','and').split('>')
+            genre = list()
+            for g in match:
+                if '</a' in g:
+                    genre.append(g.replace('</a','').rstrip().lstrip())
+            info['genre'] = '|'.join(genre)
+        else:
+            info['genre'] = None
+        
+        # get director
+        match = re.findall(dir_pat, info_html)
+        if len(match) > 0:
+            match = match[0].replace('&amp;','and').split('>')
+            director = list()
+            for d in match:
+                if '</a' in d:
+                    director.append(d.replace('</a',''))
+            info['director'] = '|'.join(director)
+        else:
+            info['director'] = None
+        
+        # get director
+        match = re.findall(wrt_pat, info_html)
+        if len(match) > 0:
+            match = match[0].replace('&amp;','and').split('>')
+            writer = list()
+            for w in match:
+                if '</a' in w:
+                    writer.append(w.replace('</a',''))
+            info['writer'] = '|'.join(writer)
+        else:
+            info['writer'] = None
+        
+        # get dates
+        match = re.findall(date_pat, info_html)
+        if len(match) > 0:
+            match = re.findall(date2_pat, match[0])
+            if len(match) == 2:
+                info['theater_date'] = match[0]
+                info['dvd_date'] = match[1]
+            else:
+                #match failed
+                info['theater_date'] = None
+                info['dvd_date'] = None
+        else:
             info['theater_date'] = None
             info['dvd_date'] = None
-    else:
-        info['theater_date'] = None
-        info['dvd_date'] = None
-    
-    # get box_office
-    match = re.findall(boxOff_pat, info_html)
-    if len(match) > 0:
-        info['currency'] = match[0].split('>')[-1][0]
-        info['box_office'] = match[0].split('>')[-1][1:]
-    else:
-        info['currency'] = None
-        info['box_office'] = None
-    
-    # get runtime
-    match = re.findall(rt_pat, info_html)
-    if len(match) > 0:
-        info['runtime'] = match[0].split('\n')[-1].strip()
-    else:
-        info['runtime'] = None
-    
-    # get studio
-    match = re.findall(studio_pat, info_html)
-    if len(match) > 0:
-        match = match[0].split('">')
-        studio = list()
-        for s in match:
-            if '</a>' in s:
-                studio.append(s.replace('</a>','').replace('</div>','').strip())
-        info['studio'] = '|'.join(studio)
-    else:
-        info['studio'] = None
-    
-    # TODO: add cast scraper
-    
-    return info
+        
+        # get box_office
+        match = re.findall(boxOff_pat, info_html)
+        if len(match) > 0:
+            info['currency'] = match[0].split('>')[-1][0]
+            info['box_office'] = match[0].split('>')[-1][1:]
+        else:
+            info['currency'] = None
+            info['box_office'] = None
+        
+        # get runtime
+        match = re.findall(rt_pat, info_html)
+        if len(match) > 0:
+            info['runtime'] = match[0].split('\n')[-1].strip()
+        else:
+            info['runtime'] = None
+        
+        # get studio
+        match = re.findall(studio_pat, info_html)
+        if len(match) > 0:
+            match = match[0].split('">')
+            studio = list()
+            for s in match:
+                if '</a>' in s:
+                    studio.append(s.replace('</a>','').replace('</div>','').strip())
+            info['studio'] = '|'.join(studio)
+        else:
+            info['studio'] = None
+        
+        # TODO: add cast scraper
+        
+        return info

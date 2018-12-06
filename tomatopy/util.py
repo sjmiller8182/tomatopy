@@ -115,8 +115,11 @@ def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     """
     crawl_rate = get_crawl_rate()
     time.sleep(crawl_rate)
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, 'html.parser')
+    try:
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, 'html.parser')
+    except TooManyRedirects:
+        soup = ''
     return soup
     
 def _is_page_404(soup):
