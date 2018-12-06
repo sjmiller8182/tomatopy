@@ -62,3 +62,4 @@ def scrape_movie_info(movie_name):
         return main_info, critic_reviews
     else:
         print('unable to scrape ' + movie_name)
+        return None, None

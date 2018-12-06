@@ -66,13 +66,9 @@ def _get_critic_reviews_from_page(soup):
     publisher = list()
     date = list()
     
-    # get to review soup
-    children = [14,1,3,1,5,7]
-    for i in children:
-        soup = list(soup.children)[i]
-    
-    # at the review level
-    review_soup = list(soup.children)
+    soup = str(soup)
+    review_soup = soup.split('="review_table')[1].split('row review_table_row')
+    review_soup.pop(0)
     
     # extract info
     for review in review_soup:
