@@ -64,10 +64,8 @@ def get_main_page_info(page):
     soup = _make_soup(page)
     
     if soup == '':
-        # return Nones when soup failed
-        return {'synopsis':None, 'rating':None, 'genre':None, 'studio':None,
-        'director':None, 'writer':None, 'currency':None, 'box_office':None,
-        'runtime':None}
+        # return None when failed soup; None is easy to detect
+        return None
         
     else:
         # prepare soup

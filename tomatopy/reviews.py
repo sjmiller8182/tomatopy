@@ -217,9 +217,8 @@ def get_critic_reviews(page):
         if get_verbose_setting():
             print('done scraping critic reviews')
     else:
-        # if pages doesnt match return empty dict
-        c_info = {'reviews':None, 'rating':None, 'fresh':None, 'critic':None,
-        'top_critic':None, 'publisher':None, 'date':None}
+        # if pages doesnt match return None; its easy to detect
+        c_info = None
         
     return c_info
     
