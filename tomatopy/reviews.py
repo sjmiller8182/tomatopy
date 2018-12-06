@@ -153,9 +153,13 @@ def _get_num_pages(soup):
     """
     
     # from soup decend to page level
-    match = re.findall(page_pat,str(list(soup)))[0]
-    match = match.split(' of ')[-1]
-    return match
+    match = re.findall(page_pat,str(list(soup)))
+    if len(match) > 0:
+        match = match[0]
+        match = match.split(' of ')[-1]
+        return match
+    else:
+        return None
 
 #===============
 # user functions
@@ -189,28 +193,34 @@ def get_critic_reviews(page):
     # how many soups?
     pages = _get_num_pages(soup)
     
-    # verbose option
-    if get_verbose_setting():
-        print('scraping critic reviews')
-        print('scraping url: ' + page + "reviews " + str(pages) + " pages to scrape")
-    
-    # eat soup
-    for page_num in range(1,int(pages)+1):
-        soup = _make_soup(page + "reviews?page=" + str(page_num) + "&sort=")
-        c_info = _get_critic_reviews_from_page(soup)
+    if pages is not None:
+        # verbose option
+        if get_verbose_setting():
+            print('scraping critic reviews')
+            print('scraping url: ' + page + "reviews " + str(pages) + " pages to scrape")
         
-        # accumulate review info
-        for i in range(len(c_info)):
-            info[i] = info[i] + c_info[i]
-    
-    c_info = dict()
-    keys = ['reviews', 'rating', 'fresh', 'critic', 'top_critic', 'publisher', 'date']
-    for k in range(len(keys)):
-        c_info[keys[k]] = info[k]
-    
-    # verbose option
-    if get_verbose_setting():
-        print('done scraping critic reviews')
+        # eat soup
+        for page_num in range(1,int(pages)+1):
+            soup = _make_soup(page + "reviews?page=" + str(page_num) + "&sort=")
+            c_info = _get_critic_reviews_from_page(soup)
+            
+            # accumulate review info
+            for i in range(len(c_info)):
+                info[i] = info[i] + c_info[i]
+        
+        c_info = dict()
+        keys = ['reviews', 'rating', 'fresh', 'critic', 'top_critic', 'publisher', 'date']
+        for k in range(len(keys)):
+            c_info[keys[k]] = info[k]
+        
+        # verbose option
+        if get_verbose_setting():
+            print('done scraping critic reviews')
+    else:
+        # if pages doesnt match return empty dict
+        c_info = {'reviews':None, 'rating':None, 'fresh':None, 'critic':None,
+        'top_critic':None, 'publisher':None, 'date':None}
+        
     return c_info
     
 #=====================
