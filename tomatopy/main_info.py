@@ -63,7 +63,7 @@ def get_main_page_info(page):
     # make soup
     soup = _make_soup(page)
     
-    if soup = '':
+    if soup == '':
         # return Nones when soup failed
         return {'synopsis':None, 'rating':None, 'genre':None, 'studio':None,
         'director':None, 'writer':None, 'currency':None, 'box_office':None,
