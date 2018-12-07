@@ -79,7 +79,7 @@ def _get_critic_reviews_from_page(soup):
             m = match[0]
             for iden in ['<div class="the_review"> ','</div>']:
                 m = m.replace(iden,'')
-            reviews.append(m)
+            reviews.append(m.strip('"'))
             
             # extract rating
             match = re.findall(rating_pat, str(review))
@@ -127,7 +127,7 @@ def _get_critic_reviews_from_page(soup):
             # extract date
             match = re.findall(date_pat, str(review))
             if len(match) > 0:
-                date.append(match[0])
+                date.append(match[0].strip('"'))
             else:
                 date.append(None)
             
