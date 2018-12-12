@@ -14,6 +14,7 @@ This file contains not functions.
 #====================
 
 from .scraper import scrape_movie_info
+from .wikipedia import scrape_movie_names
 
 #=========================
 # Supplemental User Access
