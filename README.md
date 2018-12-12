@@ -38,10 +38,10 @@ import tomatopy as rtp
 main_info, reviews = rtp.scrape_movie_info('X2: X-Men United')
 
 # just get main info
-reivews = get_critic_reviews('https://www.rottentomatoes.com/m/x2_xmen_united')
+reivews = rtp.get_critic_reviews('https://www.rottentomatoes.com/m/x2_xmen_united')
 
 # just get critic reviews
-main_info = get_main_page_info('https://www.rottentomatoes.com/m/x2_xmen_united')
+main_info = rtp.get_main_page_info('https://www.rottentomatoes.com/m/x2_xmen_united')
 
 # change crawl rate to 1 second per request (default rate)
 rtp.set_crawl_rate(1.0)
