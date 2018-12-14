@@ -21,7 +21,7 @@ Rotten Tomatoes is the world's most trusted source for entertainment recommendat
 ### Planned Updates for 0.1.0
 
 - Add code to get movie names from Wikipedia
-- Update secondary API functions to accept movie name instead of link
+- ~~Update secondary API functions to accept movie name instead of link~~
 - Check robots.txt for crawl rate in case of future addition
 
 ### Planned Updates for 0.2.0
