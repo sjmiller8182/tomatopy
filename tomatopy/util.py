@@ -16,6 +16,7 @@ This file contains the following functions:
     * get_crawl_rate - get current crawl_rate
     * set_verbose_mode - set verbose mode (Boolean)
     * get_verbose_setting - get verbose setting
+    * check_min_delay - requests the min crawl-delay if any
 """
 
 #===================
@@ -121,6 +122,36 @@ def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
     except TooManyRedirects:
         soup = ''
     return soup
+
+def check_min_delay():
+    """Requests the Rotten Tomatoes robots.txt and checks for crawl-delay
+
+    Parameters
+    ----------
+    N/A
+        
+    Returns
+    -------
+    float
+        minimum delay from crawl-delay directive
+        0 if no crawl-delay is listed
+    """
+    
+    user_found = False
+    min_delay = 0
+    
+    f = requests.get('https://www.rottentomatoes.com/robots.txt')
+    soup = BeautifulSoup(f.content, 'html.parser')
+    lines = str(soup).split('\n')
+    
+    for line in lines:
+        if 'User-agent: *' in line:
+            user_found = True
+        if user_found and ('crawl-delay' in line):
+            min_delay = float(line.split(':')[1].strip())
+    if user_found:
+        print('Warning: crawl-delay not listed for "User-agent: *". \nReturning 0.')
+    return min_delay
     
 def _is_page_404(soup):
     """Checks if a 404 page is returned

@@ -1,5 +1,8 @@
 # TomatoPy Change Log
 
+## v0.1.0 New Features
+- Added rtp.scrape_movie_names which scrapes movie names from wikipedia
+
 ## v0.0.1 Bug Fixes
 - Handle case when requests raises TooManyRedirects
 - Handle case when there are no reivews
