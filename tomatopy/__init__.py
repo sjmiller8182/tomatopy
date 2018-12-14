@@ -22,6 +22,7 @@ from .wikipedia import scrape_movie_names
 
 from .reviews import get_critic_reviews
 from .main_info import get_main_page_info
+from .util import check_min_delay
 
 #====================
 # User Control Access
