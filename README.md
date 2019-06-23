@@ -45,6 +45,6 @@ main_info = rtp.get_main_page_info('https://www.rottentomatoes.com/m/x2_xmen_uni
 # change crawl rate to 1 second per request (default rate)
 rtp.set_crawl_rate(1.0)
 
-# get movie names from wikipedia ([2008 in film](https://en.wikipedia.org/wiki/2008_in_film))
+# get movie names from wikipedia [2008 in film] (https://en.wikipedia.org/wiki/2008_in_film)
 names = rtp.scrape_movie_names(2008)
 ```
