@@ -28,12 +28,6 @@ Rotten Tomatoes is the world's most trusted source for entertainment recommendat
 - Scrape user reviews
 - Scrape Tomatometer and audience score in main info.
 
-
-### Planned Updates for 0.2.0
-
-- Scrape user reviews
-- Scrape Tomatometer and audience score in main info.
-
 ### Basic Usage
 
 ```python
