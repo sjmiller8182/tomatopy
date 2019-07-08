@@ -24,6 +24,9 @@ Rotten Tomatoes is the world's most trusted source for entertainment recommendat
 - ~~Update secondary API functions to accept movie name instead of link~~
 - Check robots.txt for crawl rate in case of future addition
 
+### Planned Updates for 0.1.1
+- Type hints
+
 ### Planned Updates for 0.2.0
 - Scrape user reviews
 - Scrape Tomatometer and audience score in main info.
