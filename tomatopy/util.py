@@ -19,12 +19,15 @@ This file contains the following functions:
     * check_min_delay - requests the min crawl-delay if any
 """
 
-#===================
-# imports / m-global
-#===================
+# base
 import requests
 import time
+
+# requirements
 from bs4 import BeautifulSoup
+from requests import TooManyRedirects
+
+# this package
 from .gl import RT_BASE_URL, DEFAULT_CRAWL_RATE, LibGlobalsContainer
 
 lib_cont = LibGlobalsContainer()

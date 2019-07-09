@@ -10,12 +10,16 @@ This file contains the following functions:
     * Builds url for wikipedia 'year in film'
     * scrape_movie_names - scrape movie names from wikipedia'
 """
-
+# base
 import time
 import datetime
 import re
+
+# requirements
 import requests
 from bs4 import BeautifulSoup
+
+# this package
 from .util import _make_soup
 
 DEFAULT_CRAWL_RATE = 1

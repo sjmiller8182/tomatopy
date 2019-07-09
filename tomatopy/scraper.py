@@ -10,10 +10,7 @@ This file contains the following functions:
 
 """
 
-#========
-# imports
-#========
-
+# this package
 from .util import _is_page_404, _build_url, _make_soup
 from .main_info import get_main_page_info
 from .reviews import get_critic_reviews

@@ -16,8 +16,11 @@ This file contains the following functions:
 # imports / m-global
 #===================
 
+# base
 import re
 import time
+
+# this package
 from .util import _make_soup
 from .util import get_verbose_setting
 from .util import _build_url
