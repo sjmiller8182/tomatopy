@@ -5,7 +5,7 @@ from tomatopy.wikipedia import _build_wiki_url, scrape_movie_names
 class TestWikiedia(unittest.TestCase):
     def test_build_wiki_url(self):
         self.assertEqual(_build_wiki_url(2008),
-        'https://en.wikipedia.org/wiki/2008_in_film')
+                         'https://en.wikipedia.org/wiki/2008_in_film')
 
     def test_scrape_movie_names(self):
         # get movies from 2008 for test
