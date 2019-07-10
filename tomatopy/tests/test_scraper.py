@@ -3,6 +3,7 @@ import unittest
 from tomatopy.scraper import scrape_movie_info
 
 class TestScraper(unittest.TestCase):
+    
     def test_scrape_movie_info(self):
         # test the main scraper
         main_info, reviews = scrape_movie_info('x2: X-men united')
@@ -33,4 +34,22 @@ class TestScraper(unittest.TestCase):
         self.assertEqual(main_info['box_office'],'214,813,155')
         self.assertEqual(main_info['runtime'],'134 minutes')
         self.assertEqual(main_info['studio'],'20th Century Fox')
+
+        # verify keys exist
+        keys_reviews = reviews.keys()
+        self.assertTrue('reviews' in keys_reviews)
+        self.assertTrue('rating' in keys_reviews)
+        self.assertTrue('fresh' in keys_reviews)
+        self.assertTrue('critic' in keys_reviews)
+        self.assertTrue('top_critic' in keys_reviews)
+        self.assertTrue('date' in keys_reviews)
     
+        # cannot verify content as this will likely
+        # change as new items are added
+        # instead verify that something was captured
+        self.assertTrue(len(reviews['reviews']) > 0)
+        self.assertTrue(len(reviews['rating']) > 0)
+        self.assertTrue(len(reviews['fresh']) > 0)
+        self.assertTrue(len(reviews['critic']) > 0)
+        self.assertTrue(len(reviews['top_critic']) > 0)
+        self.assertTrue(len(reviews['date']) > 0)
