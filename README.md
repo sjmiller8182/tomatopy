@@ -13,10 +13,10 @@ Rotten Tomatoes is the world's most trusted source for entertainment recommendat
 
 ### Recent Versions
 
-- Initial Release 0.0.0
-  - One line scraper
-  - Critic review scraper
-  - Main info scraper
+### Initial Release 0.0.0
+- One line scraper
+- Critic review scraper
+- Main info scraper
 
 ### Planned Updates for 0.1.0
 
