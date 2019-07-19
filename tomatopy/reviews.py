@@ -19,6 +19,7 @@ This file contains the following functions:
 # base
 import re
 import time
+from typing import Dict, List
 
 # this package
 from .util import _make_soup
@@ -43,7 +44,7 @@ date_pat = re.compile(r'[a-zA-Z]+\s\d+,\s\d+')
 # interal functions
 #==================
 
-def _get_critic_reviews_from_page(soup):
+def _get_critic_reviews_from_page(soup) -> List:
     """Get the review, rating, critic, if critic is a 
     'top critic', publisher, date from a given page (bs4)
 
@@ -136,7 +137,7 @@ def _get_critic_reviews_from_page(soup):
             
     return [reviews, rating, fresh, critic, top_critic, publisher, date]
 
-def _get_num_pages(soup):
+def _get_num_pages(soup) -> List:
     """Find the number of pages to scrape reviews from
 
     Parameters
@@ -164,7 +165,7 @@ def _get_num_pages(soup):
 # user functions
 #===============
     
-def get_critic_reviews(page):
+def get_critic_reviews(page: str) -> Dict[str, List]:
     """Crawls the set of critic review pages for the given movie.
     Returns a dict withkeys: reviews, rating, fresh,
     critic, top_critic, publisher, date.

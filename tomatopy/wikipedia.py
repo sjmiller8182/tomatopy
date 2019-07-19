@@ -14,6 +14,7 @@ This file contains the following functions:
 import time
 import datetime
 import re
+from typing import List
 
 # requirements
 import requests
@@ -25,12 +26,12 @@ from .util import _make_soup
 DEFAULT_CRAWL_RATE = 1
 movie_patt = re.compile(r'<i><a href=\"/wiki/[\w\(\)\%.\,\_\:\;\"]+\stitle=\"[\w\s\(\)\%.\,\_\:\;\'\"\-]+\"')
       
-def _build_wiki_url(year):
+def _build_wiki_url(year: str) -> str:
     """Builds url for wikipedia 'year in film'
 
     Parameters
     ----------
-    year : str
+    year : int
         year to scrape movie titles from
 
     Returns
@@ -48,7 +49,7 @@ def _build_wiki_url(year):
         raise Exception('Input year must be later than 1960 and not later than the current year (' + str(current_year) + ')')
     return url
     
-def scrape_movie_names(year):
+def scrape_movie_names(year: int) -> List[str]:
     """scrape movie names from wikipedia'
 
     Parameters

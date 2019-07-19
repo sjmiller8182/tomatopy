@@ -32,7 +32,7 @@ from .gl import RT_BASE_URL, DEFAULT_CRAWL_RATE, LibGlobalsContainer
 
 lib_cont = LibGlobalsContainer()
 
-def set_crawl_rate(rate):
+def set_crawl_rate(rate: float) -> None:
     """Set the crawl rate
     Remember to be a responsible bot!
 
@@ -53,7 +53,7 @@ def set_crawl_rate(rate):
     else:
         lib_cont.set_crawl_rate(rate)
         
-def get_crawl_rate():
+def get_crawl_rate() -> float:
     """Get the rate used to crawl
 
     Parameters
@@ -71,7 +71,7 @@ def get_crawl_rate():
     else:
         return DEFAULT_CRAWL_RATE
 
-def set_verbose_mode(verbose = False):
+def set_verbose_mode(verbose: bool = False) -> None:
     """Enable/Disable Verbose Mode
 
     Parameters
@@ -86,7 +86,7 @@ def set_verbose_mode(verbose = False):
 
     lib_cont.set_verbose_mode(verbose)
         
-def get_verbose_setting():
+def get_verbose_setting() -> bool:
     """Get the current setting of verbose
 
     Parameters
@@ -101,7 +101,7 @@ def get_verbose_setting():
 
     return lib_cont.get_verbose_setting()
     
-def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
+def _make_soup(url: str, crawl_rate: float = DEFAULT_CRAWL_RATE):
     """Request url and get content of page as html soup
 
     Parameters
@@ -126,7 +126,7 @@ def _make_soup(url, crawl_rate = DEFAULT_CRAWL_RATE):
         soup = ''
     return soup
 
-def check_min_delay():
+def check_min_delay() -> float:
     """Requests the Rotten Tomatoes robots.txt and checks for crawl-delay
 
     Parameters
@@ -156,7 +156,7 @@ def check_min_delay():
         print('Warning: crawl-delay not listed for "User-agent: *". \nReturning 0.')
     return min_delay
     
-def _is_page_404(soup):
+def _is_page_404(soup: str) -> bool:
     """Checks if a 404 page is returned
 
     Parameters
@@ -178,7 +178,7 @@ def _is_page_404(soup):
     else:
         return False
         
-def _format_name(m_name, sep = '_'):
+def _format_name(m_name: str, sep: str = '_') -> str:
     """Formats name for url
 
     Parameters
@@ -205,7 +205,7 @@ def _format_name(m_name, sep = '_'):
     m_name = m_name.strip('"')
     return m_name.replace(' ', sep)
     
-def _build_url(m_name, m_type = 'Movie', sep = '_'):
+def _build_url(m_name: str, m_type: str = 'Movie', sep: str = '_') -> str:
     """Builds url for main page of movie
 
     Parameters

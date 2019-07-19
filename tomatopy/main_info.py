@@ -13,6 +13,7 @@ This file contains the following functions:
 
 # base
 import re
+from typing import Dict, List
 
 # this package
 from .util import _make_soup
@@ -36,7 +37,7 @@ studio_pat = re.compile(r'Studio: </div>[\sa-zA-Z\d\<\=\"\-\>\:\/\.]+a>\s+</div>
 # user functions
 #===============
 
-def get_main_page_info(page):
+def get_main_page_info(page: str) -> Dict[str, List]:
     """Scrapes info from a movie main page
 
     Parameters

@@ -9,6 +9,8 @@ This file contains the following functions:
     *  scrape_movie_info - main movie scraper
 
 """
+# base
+from typing import List, Dict
 
 # this package
 from .util import _is_page_404, _build_url, _make_soup
@@ -16,7 +18,7 @@ from .main_info import get_main_page_info
 from .reviews import get_critic_reviews
 from .util import get_verbose_setting
 
-def scrape_movie_info(movie_name):
+def scrape_movie_info(movie_name: str) -> [Dict[str, List], Dict[str, List]]:
     """Get the main info and critic reviews for
     input movie.
 
@@ -39,7 +41,7 @@ def scrape_movie_info(movie_name):
     
     # determine if url can be used
     seps = ['_', '-']
-    for sep in seps:
+    for _ in seps:
         movie_url = _build_url(movie_name)
         soup = _make_soup(movie_url)
         is_404 = _is_page_404(soup)
